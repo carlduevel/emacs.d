@@ -1,0 +1,162 @@
+#+TITLE: Emacs configuration
+#+AUTHOR: Carl Düvel
+#+EMAIL: c.a.duevel@gmail.com 
+
+* Dependency management
+
+** Define package repositories(archives)
+
+#+BEGIN_SRC emacs-lisp
+(require 'package)
+
+(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+                         ("marmalade" . "https://marmalade-repo.org/packages/")
+                         ("melpa" . "https://melpa.org/packages/")))
+
+#+END_SRC
+
+** Packages to be installed
+
+#+BEGIN_SRC emacs-lisp
+(defvar my-packages '(evil
+		      evil-escape
+                      exec-path-from-shell
+
+
+))
+
+#+END_SRC 
+Emacs dependencies/libraries are managed via the internal [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Packages.html#Packages][package
+management system]]. To initially install packages, open
+=~/.emacs.d/init.el=, refresh your package list with =M-x
+package-refresh-contents= and install everything using =M-x
+eval-buffer=.
+
+#+BEGIN_SRC emacs-lisp
+  (dolist (p my-packages)
+    (unless (package-installed-p p)
+      (package-refresh-contents)
+      (package-install p))
+    (add-to-list 'package-selected-packages p))
+#+END_SRC
+
+* Configuration of built-in features
+** Gargabe Collection
+   
+Allow 20MB of memory (instead of 0.76MB) before calling garbage
+collection. This means GC runs less often, which speeds up some
+operations.
+
+#+BEGIN_SRC emacs-lisp
+  (setq gc-cons-threshold 20000000)
+#+END_SRC
+
+** Auto-Save in =/tmp=
+
+Store backups and auto-saved files in =TEMPORARY-FILE-DIRECTORY= (which
+defaults to /tmp on Unix), instead of in the same directory as the
+file.
+
+#+BEGIN_SRC emacs-lisp
+  (setq backup-directory-alist
+        `((".*" . ,temporary-file-directory)))
+  (setq auto-save-file-name-transforms
+        `((".*" ,temporary-file-directory t)))
+#+END_SRC
+
+** Always follow symlinks
+   When opening a file, always follow symlinks.
+
+#+BEGIN_SRC emacs-lisp
+  (setq vc-follow-symlinks t)
+#+END_SRC
+
+** Sentences have one space after a period
+Don't assume that sentences should have two spaces after
+periods.
+
+#+BEGIN_SRC emacs-lisp
+  (setq sentence-end-double-space nil)
+#+END_SRC
+
+** Confirm before closing Emacs
+#+BEGIN_SRC emacs-lisp
+  (setq confirm-kill-emacs 'y-or-n-p)
+#+END_SRC
+
+** =dired-mode=
+
+Ability to use =a= to visit a new directory or file in =dired= instead
+of using =RET=. =RET= works just fine, but it will create a new buffer
+for /every/ interaction whereas =a= reuses the current buffer.
+
+#+BEGIN_SRC emacs-lisp
+  (put 'dired-find-alternate-file 'disabled nil)
+#+END_SRC
+
+Human readable units
+
+#+BEGIN_SRC emacs-lisp
+  (setq-default dired-listing-switches "-alh")
+#+END_SRC
+
+** Ask =y/n= instead of =yes/no=
+   This is a favorable shorthand.
+#+BEGIN_SRC emacs-lisp
+  (fset 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
+** Auto revert files on change
+When something changes a file, automatically refresh the
+buffer containing that file so they can't get out of sync.
+
+#+BEGIN_SRC emacs-lisp
+(global-auto-revert-mode t)
+#+END_SRC
+** Disable startup message
+
+#+BEGIN_SRC emacs-lisp
+  (setq inhibit-splash-screen t)
+  (setq inhibit-startup-message t)
+#+END_SRC
+
+** Automatic Line Breaks
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'text-mode-hook 'auto-fill-mode)
+#+END_SRC
+
+** Disable scroll bars
+#+BEGIN_SRC emacs-lisp
+(scroll-bar-mode -1)
+#+END_SRC
+
+** Remember the cursor position of files when reopening them
+
+#+BEGIN_SRC emacs-lisp
+  (setq save-place-file "~/.emacs.d/saveplace")
+  (setq-default save-place t)
+#+END_SRC
+
+* Configuration of external packages
+** Set $MANPATH, $PATH and exec-path from shell even when started from GUI helpers like =dmenu= or =Spotlight=
+#+BEGIN_SRC emacs-lisp
+(exec-path-from-shell-initialize)
+#+END_SRC
+** Evil mode
+
+Vim emulation for emacs.
+
+#+BEGIN_SRC emacs-lisp
+(evil-mode t)
+;; Enable "M-x" in evil mode
+(global-set-key (kbd "M-x") 'execute-extended-command)
+#+END_SRC
+
+Escape modes in evil with jk instead of Esc.
+
+#+BEGIN_SRC emacs-lisp
+(setq-default evil-escape-key-sequence "jk")
+(evil-escape-mode)
+#+END_SRC
+
+
+
