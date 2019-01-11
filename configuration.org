@@ -136,6 +136,11 @@ buffer containing that file so they can't get out of sync.
   (setq-default save-place t)
 #+END_SRC
 
+** Custom-File
+#+BEGIN_SRC emacs-lisp
+(setq custom-file "~/.emacs.d/custom-settings.el")
+(load custom-file t)
+#+END_SRC
 * Configuration of external packages
 ** Set $MANPATH, $PATH and exec-path from shell even when started from GUI helpers like =dmenu= or =Spotlight=
 #+BEGIN_SRC emacs-lisp
