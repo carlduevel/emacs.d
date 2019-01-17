@@ -21,6 +21,8 @@
 (defvar my-packages '(evil
 		      evil-escape
                       exec-path-from-shell
+                      org-bullets
+		      zenburn-theme
 
 
 ))
@@ -124,11 +126,39 @@ buffer containing that file so they can't get out of sync.
   (add-hook 'text-mode-hook 'auto-fill-mode)
 #+END_SRC
 
-** Disable scroll bars
+** Disable scroll bar
 #+BEGIN_SRC emacs-lisp
 (scroll-bar-mode -1)
 #+END_SRC
 
+** Disable menu bar
+#+BEGIN_SRC emacs-lisp
+(menu-bar-mode -1)
+#+END_SRC
+
+** Disable tool bar
+#+BEGIN_SRC emacs-lisp
+(tool-bar-mode -1)
+#+END_SRC
+
+
+** Remember the cursor position of files when reopening them
+
+#+BEGIN_SRC emacs-lisp
+  (setq save-place-file "~/.emacs.d/saveplace")
+  (setq-default save-place t)
+#+END_SRC
+
+** Custom-File
+
+#+BEGIN_SRC emacs-lisp
+(setq custom-file "~/.emacs.d/custom-settings.el")
+(load custom-file t)
+#+END_SRC
+** Put pointer to help window immideatly
+#+BEGIN_SRC emacs-lisp
+(setq help-window-select t)
+#+END_SRC
 ** Remember the cursor position of files when reopening them
 
 #+BEGIN_SRC emacs-lisp
@@ -140,6 +170,52 @@ buffer containing that file so they can't get out of sync.
 #+BEGIN_SRC emacs-lisp
 (setq custom-file "~/.emacs.d/custom-settings.el")
 (load custom-file t)
+#+END_SRC
+
+** Org-mode
+*** Display preferences
+
+Show an outline of pretty bullets instead of a list of asterisks.
+#+BEGIN_SRC emacs-lisp
+(add-hook 'org-mode-hook 'org-bullets-mode)
+#+END_SRC
+
+Show a little downward-pointing arrow instead of the usual ellipsis
+(=...=) that org displays when there's stuff under a header.
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-ellipsis "⤵")
+#+END_SRC
+
+*** GTD
+
+Basic setup:
+
+
+
+#+BEGIN_SRC emacs-lisp
+(require 'org)
+
+(setq gtd-dir "~/org/gtd/")
+
+(setq org-agenda-files (list
+			 (concat gtd-dir "inbox.org")
+                         (concat gtd-dir "gtd.org")
+                         (concat gtd-dir "tickler.org")))
+
+(setq org-default-notes-file  "~/org/gtd/inbox.org")
+#+END_SRC
+Org Capture Templates are explained [[http://orgmode.org/manual/Capture-templates.html][here]], Org Template expansion [[http://orgmode.org/manual/Template-expansion.html#Template-expansion][here.]]
+#+BEGIN_SRC emacs-lisp
+(define-key global-map "\C-cc" 'org-capture)
+
+(setq org-capture-templates '(("t" "Todo [inbox]" entry
+                               (file+headline (concat gtd-dir "inbox.org") "Tasks")
+                               "* TODO %i%?")
+                              ("T" "Tickler" entry
+                               (file+headline (concat gtd-dir "tickler.org") "Tickler")
+                               "* %i%? \n %U")))
+
 #+END_SRC
 * Configuration of external packages
 ** Set $MANPATH, $PATH and exec-path from shell even when started from GUI helpers like =dmenu= or =Spotlight=
@@ -163,5 +239,10 @@ Escape modes in evil with jk instead of Esc.
 (evil-escape-mode)
 #+END_SRC
 
+** Custom theme
+
+#+BEGIN_SRC emacs-lisp
+(load-theme 'zenburn t)
+#+END_SRC
 
 
