@@ -187,6 +187,15 @@ Show a little downward-pointing arrow instead of the usual ellipsis
   (setq org-ellipsis "⤵")
 #+END_SRC
 
+When editing org-files with source-blocks, we want the source blocks to be themed as they would in their native mode.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-src-fontify-natively t
+    org-src-tab-acts-natively t
+    org-confirm-babel-evaluate nil
+    org-edit-src-content-indentation 0)
+#+END_SRC
+
 *** GTD
 
 Basic setup:
