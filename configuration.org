@@ -19,13 +19,11 @@
 
 #+BEGIN_SRC emacs-lisp
 (defvar my-packages '(evil
-		      evil-escape
+                      evil-escape
                       exec-path-from-shell
                       org-bullets
-		      zenburn-theme
-
-
-))
+                      zenburn-theme
+                      magit))
 
 #+END_SRC 
 Emacs dependencies/libraries are managed via the internal [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Packages.html#Packages][package
