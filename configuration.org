@@ -251,3 +251,21 @@ Escape modes in evil with jk instead of Esc.
 #+END_SRC
 
 
+** Magit
+
+Magit is an interface to the version control system Git.
+
+*** Configuration
+
+Create shortcut for =Magit=.
+
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "C-x g") 'magit-status)
+#+END_SRC
+
+**** Start the commit buffer in evil normal mode
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'with-editor-mode-hook 'evil-normal-state)
+#+END_SRC
+
