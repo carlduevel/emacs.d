@@ -235,8 +235,6 @@ Vim emulation for emacs.
 
 #+BEGIN_SRC emacs-lisp
 (evil-mode t)
-;; Enable "M-x" in evil mode
-(global-set-key (kbd "M-x") 'execute-extended-command)
 #+END_SRC
 
 Escape modes in evil with jk instead of Esc.
