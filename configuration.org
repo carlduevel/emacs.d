@@ -211,6 +211,13 @@ Basic setup:
                          (concat gtd-dir "tickler.org")))
 
 (setq org-default-notes-file  "~/org/gtd/inbox.org")
+
+(setq org-todo-keywords
+            '((sequence "TODO" "|" "DONE")
+              (sequence "PROJECT" "AGENDA" "|" "MINUTES")
+              (sequence "WAITING" "|" "PROGRESS")))
+
+
 #+END_SRC
 Org Capture Templates are explained [[http://orgmode.org/manual/Capture-templates.html][here]], Org Template expansion [[http://orgmode.org/manual/Template-expansion.html#Template-expansion][here.]]
 #+BEGIN_SRC emacs-lisp
