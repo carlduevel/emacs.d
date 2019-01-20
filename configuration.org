@@ -224,6 +224,8 @@ Org Capture Templates are explained [[http://orgmode.org/manual/Capture-template
                                "* %i%? \n %U")))
 
 #+END_SRC
+
+*** TODO Can I auto format embedded lisp code?
 * Configuration of external packages
 ** Set $MANPATH, $PATH and exec-path from shell even when started from GUI helpers like =dmenu= or =Spotlight=
 #+BEGIN_SRC emacs-lisp
@@ -241,6 +243,7 @@ Escape modes in evil with jk instead of Esc.
 
 #+BEGIN_SRC emacs-lisp
 (setq-default evil-escape-key-sequence "jk")
+(setq-default evil-escape-delay 0.2)
 (evil-escape-mode)
 #+END_SRC
 
