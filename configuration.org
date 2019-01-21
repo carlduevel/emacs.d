@@ -233,6 +233,17 @@ Org Capture Templates are explained [[http://orgmode.org/manual/Capture-template
 #+END_SRC
 
 *** TODO Can I auto format embedded lisp code?
+
+** ido completion engine
+=ido= stands for /interactivly DO things/ so it means autocompletion
+for many functions like find-file or switch-buffer.
+#+BEGIN_SRC emacs-lisp
+  (ido-mode t)
+  (ido-everywhere t)
+  (setq ido-enable-flex-matching t)
+#+END_SRC
+
+
 * Configuration of external packages
 ** Set $MANPATH, $PATH and exec-path from shell even when started from GUI helpers like =dmenu= or =Spotlight=
 #+BEGIN_SRC emacs-lisp
