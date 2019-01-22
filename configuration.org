@@ -223,6 +223,12 @@ Basic setup:
 (setq org-refile-use-outline-path 'file)
 
                             
+(setq org-agenda-custom-commands 
+         '(("h" "@home" tags-todo "@home")
+         ("c" "@computer" tags-todo "@computer")
+         ("H" "+hasi" tags-todo "@home")
+         ("p" "@phone" tags-todo "@home")
+         ("b" "@BO" tags-todo "@home")))                            
 
 
 #+END_SRC
