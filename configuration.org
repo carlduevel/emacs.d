@@ -194,8 +194,6 @@ When editing org-files with source-blocks, we want the source blocks to be theme
     org-edit-src-content-indentation 0)
 #+END_SRC
 
-*** GTD
-
 Basic setup:
 
 
@@ -204,18 +202,27 @@ Basic setup:
 (require 'org)
 
 (setq gtd-dir "~/org/gtd/")
-
+(setq inbox-file (concat gtd-dir "inbox.org"))
+(setq gtd-file (concat gtd-dir "gtd.org"))
+(setq tickler-file (concat gtd-dir "tickler.org"))
 (setq org-agenda-files (list
-			 (concat gtd-dir "inbox.org")
-                         (concat gtd-dir "gtd.org")
-                         (concat gtd-dir "tickler.org")))
+			 inbox-file
+                         gtd-file
+                         tickler-file))
 
-(setq org-default-notes-file  "~/org/gtd/inbox.org")
+(setq org-default-notes-file  inbox-file)
 
 (setq org-todo-keywords
             '((sequence "TODO" "|" "DONE")
               (sequence "PROJECT" "AGENDA" "|" "MINUTES")
               (sequence "WAITING" "|" "PROGRESS")))
+
+(global-set-key (kbd "C-c a") 'org-agenda)
+
+(setq org-refile-targets '((org-agenda-files :maxlevel . 3)))
+(setq org-refile-use-outline-path 'file)
+
+                            
 
 
 #+END_SRC
