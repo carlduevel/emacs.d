@@ -131,7 +131,7 @@ buffer containing that file so they can't get out of sync.
 
 ** Disable menu bar
 #+BEGIN_SRC emacs-lisp
-(menu-bar-mode -1)
+;(menu-bar-mode -1)
 #+END_SRC
 
 ** Disable tool bar
@@ -206,7 +206,7 @@ Basic setup:
 (setq gtd-file (concat gtd-dir "gtd.org"))
 (setq tickler-file (concat gtd-dir "tickler.org"))
 (setq org-agenda-files (list
-			 inbox-file
+                         inbox-file
                          gtd-file
                          tickler-file))
 
@@ -218,11 +218,11 @@ Basic setup:
               (sequence "WAITING" "|" "PROGRESS")))
 
 (global-set-key (kbd "C-c a") 'org-agenda)
+(global-set-key "\C-cl" 'org-store-link)
 
 (setq org-refile-targets '((org-agenda-files :maxlevel . 3)))
 (setq org-refile-use-outline-path 'file)
 
-                            
 (setq org-agenda-custom-commands 
          '(("h" "@home" tags-todo "@home")
          ("c" "@computer" tags-todo "@computer")
