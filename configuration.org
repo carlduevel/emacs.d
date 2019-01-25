@@ -20,6 +20,7 @@
 #+BEGIN_SRC emacs-lisp
 (defvar my-packages '(evil
                       evil-escape
+                      evil-leader
                       exec-path-from-shell
                       org-bullets
                       zenburn-theme
@@ -306,6 +307,18 @@ Skip source code in org mode documents.
 ** Set $MANPATH, $PATH and exec-path from shell even when started from GUI helpers like =dmenu= or =Spotlight=
 #+BEGIN_SRC emacs-lisp
 (exec-path-from-shell-initialize)
+#+END_SRC
+** Leader Mode Config
+#+BEGIN_SRC emacs-lisp
+  (require 'evil-leader)
+  (global-evil-leader-mode)
+  (evil-leader/set-leader ",")
+  (evil-leader/set-key
+    "w" 'basic-save-buffer
+    "f" 'find-file
+    "b" 'evil-buffer
+    "a" 'org-archive-subtree-default
+    "q" 'evil-quit)
 #+END_SRC
 ** Evil mode
 
