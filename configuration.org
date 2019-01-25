@@ -23,6 +23,7 @@
                       evil-leader
                       exec-path-from-shell
                       org-bullets
+                      which-key
                       zenburn-theme
                       magit))
 
@@ -359,5 +360,13 @@ Create shortcut for =Magit=.
 
 #+BEGIN_SRC emacs-lisp
   (add-hook 'with-editor-mode-hook 'evil-normal-state)
+#+END_SRC
+
+** Which Key
+  =which-key= displays available keybindings in a popup.
+
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'org-mode-hook 'which-key-mode)
+  (add-hook 'cider-mode-hook 'which-key-mode)
 #+END_SRC
 
