@@ -232,9 +232,9 @@ Basic setup:
 (setq org-agenda-custom-commands 
          '(("h" "@home" tags-todo "@home")
          ("c" "@computer" tags-todo "@computer")
-         ("H" "+hasi" tags-todo "@home")
-         ("p" "@phone" tags-todo "@home")
-         ("b" "@BO" tags-todo "@home")))                            
+         ("H" "+hasi" tags-todo "+hasi")
+         ("p" "@phone" tags-todo "@phone")
+         ("b" "@BO" tags-todo "@BO")))                           
 
 
 #+END_SRC
