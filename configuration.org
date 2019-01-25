@@ -236,6 +236,7 @@ Basic setup:
          ("p" "@phone" tags-todo "@phone")
          ("b" "@BO" tags-todo "@BO")))                           
 
+(add-hook 'org-mode-hook 'org-indent-mode)
 
 #+END_SRC
 Org Capture Templates are explained [[http://orgmode.org/manual/Capture-templates.html][here]], Org Template expansion [[http://orgmode.org/manual/Template-expansion.html#Template-expansion][here.]]
