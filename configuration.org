@@ -262,6 +262,44 @@ for many functions like find-file or switch-buffer.
   (setq ido-enable-flex-matching t)
 #+END_SRC
 
+** Flyspell
+Order corrections by likeliness, not by the default of alphabetical
+ordering.
+
+#+BEGIN_SRC emacs-lisp
+(setq flyspell-sort-corrections nil)
+#+END_SRC
+
+Do not print messages for every word (when checking the entire
+buffer). This is a major performance gain.
+#+BEGIN_SRC emacs-lisp
+(setq flyspell-issue-message-flag nil)
+#+END_SRC
+
+Switch between German and English dictionaries.
+Those were installed with ~apt install ingerman iamerican-large~
+
+#+BEGIN_SRC emacs-lisp
+  (defun flyspell-switch-dictionary()
+    "Switch between German and English dictionaries"
+    (interactive)
+    (let* ((dic ispell-current-dictionary)
+           (change (if (string= dic "deutsch") "english" "deutsch")))
+      (ispell-change-dictionary change)
+      (message "Dictionary switched from %s to %s" dic change)))
+#+END_SRC
+
+Switch on flyspell automatically in some major modes.
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'text-mode-hook 'flyspell-mode)
+  (add-hook 'org-mode-hook 'flyspell-mode)
+#+END_SRC
+
+Skip source code in org mode documents.
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'ispell-skip-region-alist '("^#+BEGIN_SRC" . "^#+END_SRC"))
+#+END_SRC
 
 * Configuration of external packages
 ** Set $MANPATH, $PATH and exec-path from shell even when started from GUI helpers like =dmenu= or =Spotlight=
