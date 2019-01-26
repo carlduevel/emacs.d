@@ -6,5 +6,6 @@
 /configuration.pdf
 /configuration.tex
 ido.last
-/elpa
+elpa/
+bookmarks
 questions.org
