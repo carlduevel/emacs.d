@@ -23,6 +23,8 @@
                       evil-leader
                       exec-path-from-shell
                       org-bullets
+                      popup
+                      synosaurus
                       which-key
                       zenburn-theme
                       magit))
@@ -140,7 +142,6 @@ buffer containing that file so they can't get out of sync.
 #+BEGIN_SRC emacs-lisp
 (tool-bar-mode -1)
 #+END_SRC
-
 
 ** Remember the cursor position of files when reopening them
 
@@ -343,7 +344,6 @@ Escape modes in evil with jk instead of Esc.
 (load-theme 'zenburn t)
 #+END_SRC
 
-
 ** Magit
 
 Magit is an interface to the version control system Git.
@@ -369,4 +369,19 @@ Create shortcut for =Magit=.
   (add-hook 'org-mode-hook 'which-key-mode)
   (add-hook 'cider-mode-hook 'which-key-mode)
 #+END_SRC
+
+** Thesaurus
+A thesaurus is provided by the ~synosaurus~ package.
+The default backend is wordnet, an offline English thesaurus.
+We also install the popup library to have the options presented this
+way.
+#+BEGIN_SRC emacs-lisp
+(setq synosaurus-choose-method 'popup)
+#+END_SRC
+The default keybinding of ~synosaurus~ clashes with org-mode.
+#+BEGIN_SRC emacs-lisp
+(evil-leader/set-key "t" 'synosaurus-choose-and-replace)
+#+END_SRC
+
+
 
