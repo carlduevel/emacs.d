@@ -183,7 +183,6 @@ Exports to markdown are useful.
 #+BEGIN_SRC emacs-lisp
 (require 'ox-md)
 #+END_SRC
-
 *** Display preferences
 
 Show an outline of pretty bullets instead of a list of asterisks.
