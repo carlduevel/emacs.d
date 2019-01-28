@@ -26,6 +26,8 @@
                       popup
                       synosaurus
                       which-key
+                      writegood-mode
+                      writeroom-mode
                       zenburn-theme
                       magit))
 
