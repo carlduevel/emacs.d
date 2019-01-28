@@ -320,6 +320,8 @@ Skip source code in org mode documents.
     "f" 'find-file
     "b" 'evil-buffer
     "a" 'org-archive-subtree-default
+    "i" 'org-clock-in
+    "o" 'org-clock-out
     "q" 'evil-quit)
 #+END_SRC
 ** Evil mode
