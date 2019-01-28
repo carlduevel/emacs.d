@@ -40,11 +40,12 @@ package-refresh-contents= and install everything using =M-x
 eval-buffer=.
 
 #+BEGIN_SRC emacs-lisp
-  (dolist (p my-packages)
-    (unless (package-installed-p p)
-      (package-refresh-contents)
-      (package-install p))
-    (add-to-list 'package-selected-packages p))
+(dolist (p my-packages)
+  (unless (package-installed-p p)
+  (package-refresh-contents)
+  (message "Installing %s" p)
+  (package-install p))
+  (add-to-list 'package-selected-packages p))
 #+END_SRC
 
 * Configuration of built-in features
