@@ -21,6 +21,7 @@
 (defvar my-packages '(evil
                       evil-escape
                       evil-leader
+                      atomic-chrome
                       exec-path-from-shell
                       org-bullets
                       org-gcal
@@ -390,6 +391,12 @@ The default keybinding of ~synosaurus~ clashes with org-mode.
 
 
 
+** Browser support
+#+BEGIN_SRC emacs-lisp
+(require 'atomic-chrome)
+(atomic-chrome-start-server)
+(setq atomic-chrome-buffer-open-style 'frame)
+#+END_SRC
 ** org-gcal
 #+BEGIN_SRC emacs-lisp
 (require 'netrc)
