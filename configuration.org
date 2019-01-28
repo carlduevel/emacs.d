@@ -23,6 +23,7 @@
                       evil-leader
                       exec-path-from-shell
                       org-bullets
+                      org-gcal
                       popup
                       synosaurus
                       which-key
@@ -205,20 +206,18 @@ When editing org-files with source-blocks, we want the source blocks to be theme
     org-edit-src-content-indentation 0)
 #+END_SRC
 
-Basic setup:
-
-
-
+*** GTD
 #+BEGIN_SRC emacs-lisp
 (require 'org)
-
 (setq gtd-dir "~/org/gtd/")
 (setq inbox-file (concat gtd-dir "inbox.org"))
 (setq gtd-file (concat gtd-dir "gtd.org"))
 (setq tickler-file (concat gtd-dir "tickler.org"))
+(setq gcal-file (concat gtd-dir "gcal.org"))
 (setq org-agenda-files (list
                          inbox-file
                          gtd-file
+                         gcal-file
                          tickler-file))
 
 (setq org-default-notes-file  inbox-file)
@@ -248,7 +247,9 @@ Org Capture Templates are explained [[http://orgmode.org/manual/Capture-template
 #+BEGIN_SRC emacs-lisp
 (define-key global-map "\C-cc" 'org-capture)
 
-(setq org-capture-templates '(("t" "Todo [inbox]" entry
+(setq org-capture-templates '(("a" "Appointment" entry (file  "~/org/gtd/gcal.org" )
+                               "* %?\n\n%^T\n\n:PROPERTIES:\n\n:END:\n\n")
+                              ("t" "Todo [inbox]" entry
                                (file+headline (concat gtd-dir "inbox.org") "Tasks")
                                "* TODO %i%?")
                               ("T" "Tickler" entry
@@ -388,4 +389,20 @@ The default keybinding of ~synosaurus~ clashes with org-mode.
 #+END_SRC
 
 
+
+** org-gcal
+#+BEGIN_SRC emacs-lisp
+(require 'netrc)
+
+(defun get-authinfo (host port)
+ (let* ((netrc (netrc-parse (expand-file-name "~/.authinfo")))
+        (hostentry (netrc-machine netrc host port port)))
+  (when hostentry (netrc-get hostentry "password"))))
+(require 'org-gcal)
+(setq org-gcal-client-id "670360079766-1u8vf6j1r5qmkg98f2imeje3mogql24f.apps.googleusercontent.com"
+      org-gcal-client-secret (get-authinfo "gcal.api" "9999")
+      org-gcal-file-alist '(("c.a.duevel@gmail.com" .  "~/org/gtd/gcal.org")))
+(add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
+(add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
+#+END_SRC
 
