@@ -25,6 +25,7 @@
                       org-bullets
                       org-gcal
                       popup
+		          projectile
                       synosaurus
                       which-key
                       writegood-mode
@@ -394,7 +395,6 @@ The default keybinding of ~synosaurus~ clashes with org-mode.
 #+END_SRC
 
 
-
 ** Browser support
 #+BEGIN_SRC emacs-lisp
 (require 'atomic-chrome)
@@ -416,4 +416,15 @@ The default keybinding of ~synosaurus~ clashes with org-mode.
 (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
 (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
 #+END_SRC
+** projectile
+https://github.com/bbatsov/projectile
+Projectile is a project interaction library.
+#+BEGIN_SRC emacs-lisp
+  (require 'projectile)
+  (projectile-mode +1)
+  (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+#+END_SRC
+
+
 

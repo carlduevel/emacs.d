@@ -5,7 +5,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (org-gcal oauth2 org-ref org-pomodoro org-caldav magit zenburn-theme writeroom-mode org-bullets writegood-mode popup synosaurus which-key evil-leader exec-path-from-shell evil-escape evil)))
+    (projectile org-gcal oauth2 org-ref org-pomodoro org-caldav magit zenburn-theme writeroom-mode org-bullets writegood-mode popup synosaurus which-key evil-leader exec-path-from-shell evil-escape evil)))
  '(which-key-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
