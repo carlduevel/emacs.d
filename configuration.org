@@ -140,7 +140,7 @@ buffer containing that file so they can't get out of sync.
 
 ** Disable menu bar
 #+BEGIN_SRC emacs-lisp
-;(menu-bar-mode -1)
+(menu-bar-mode -1)
 #+END_SRC
 
 ** Disable tool bar
