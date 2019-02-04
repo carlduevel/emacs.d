@@ -74,6 +74,13 @@ file.
         `((".*" ,temporary-file-directory t)))
 #+END_SRC
 
+** Save Buffer on focus out
+Give Emacs the nice IDEA feature of "auto-save on focus lost".
+Pulled from [[https://emacsredux.com/blog/2014/03/22/a-peek-at-emacs-24-dot-4-focus-hooks/][here.]]
+#+BEGIN_SRC emacs-lisp
+(add-hook 'focus-out-hook 'save-buffer)
+#+END_SRC
+
 ** Always follow symlinks
    When opening a file, always follow symlinks.
 
