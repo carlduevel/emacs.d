@@ -17,7 +17,8 @@
 ** Packages to be installed
 
 #+BEGIN_SRC emacs-lisp
-(defvar my-packages '(evil
+(defvar my-packages '(auctex
+                      evil
                       evil-escape
                       evil-leader
                       atomic-chrome
@@ -394,7 +395,6 @@ The default keybinding of ~synosaurus~ clashes with org-mode.
 (evil-leader/set-key "t" 'synosaurus-choose-and-replace)
 #+END_SRC
 
-
 ** Browser support
 #+BEGIN_SRC emacs-lisp
 (require 'atomic-chrome)
@@ -425,6 +425,10 @@ Projectile is a project interaction library.
   (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
   (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 #+END_SRC
-
-
+** LaTeX
+Auctex manual recommends these settings:
+#+BEGIN_SRC emacs-lisp
+(setq TeX-auto-save t)
+(setq TeX-parse-self t)
+#+END_SRC
 
