@@ -343,13 +343,14 @@ Kill all buffers but the current one.
   (global-evil-leader-mode)
   (evil-leader/set-leader ",")
   (evil-leader/set-key
-    "w" 'basic-save-buffer
-    "f" 'find-file
-    "b" 'evil-buffer
     "a" 'org-archive-subtree-default
+    "b" 'evil-buffer
+    "f" 'find-file
     "i" 'org-clock-in
+    "k" 'kill-buffer
     "o" 'org-clock-out
-    "q" 'evil-quit)
+    "q" 'evil-quit
+    "w" 'basic-save-buffer)
 #+END_SRC
 ** Evil mode
 
