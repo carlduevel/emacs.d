@@ -321,6 +321,16 @@ Skip source code in org mode documents.
 #+BEGIN_SRC emacs-lisp
   (show-paren-mode t)
 #+END_SRC
+** Buffer handling
+Kill all buffers but the current one.
+#+BEGIN_SRC emacs-lisp
+  (defun kill-other-buffers ()
+    "Kill all other buffers."
+    (interactive)
+    (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
+#+END_SRC
+
+
 
 * Configuration of external packages
 ** Set $MANPATH, $PATH and exec-path from shell even when started from GUI helpers like =dmenu= or =Spotlight=
