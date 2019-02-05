@@ -6,7 +6,7 @@
  '(debug-on-error t)
  '(package-selected-packages
    (quote
-    (auctex docker-compose-mode projectile org-gcal oauth2 org-ref org-pomodoro org-caldav magit zenburn-theme writeroom-mode org-bullets writegood-mode popup synosaurus which-key evil-leader exec-path-from-shell evil-escape evil)))
+    (ag auctex docker-compose-mode projectile org-gcal oauth2 org-ref org-pomodoro org-caldav magit zenburn-theme writeroom-mode org-bullets writegood-mode popup synosaurus which-key evil-leader exec-path-from-shell evil-escape evil)))
  '(which-key-mode t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

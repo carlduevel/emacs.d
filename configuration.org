@@ -17,7 +17,8 @@
 ** Packages to be installed
 
 #+BEGIN_SRC emacs-lisp
-(defvar my-packages '(auctex
+(defvar my-packages '(ag
+                      auctex
                       evil
                       evil-escape
                       evil-leader
