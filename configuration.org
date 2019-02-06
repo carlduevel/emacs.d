@@ -218,7 +218,7 @@ When editing org-files with source-blocks, we want the source blocks to be theme
 *** GTD
 #+BEGIN_SRC emacs-lisp
 (require 'org)
-(setq gtd-dir "~/org/gtd/")
+(setq gtd-dir "~/Dropbox/org/gtd/")
 (setq inbox-file (concat gtd-dir "inbox.org"))
 (setq gtd-file (concat gtd-dir "gtd.org"))
 (setq tickler-file (concat gtd-dir "tickler.org"))
@@ -329,7 +329,6 @@ Kill all buffers but the current one.
     (interactive)
     (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
 #+END_SRC
-
 
 
 * Configuration of external packages
