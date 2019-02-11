@@ -63,6 +63,11 @@ operations.
 #+BEGIN_SRC emacs-lisp
   (setq gc-cons-threshold 20000000)
 #+END_SRC
+** Spaces instead of tabs
+[[https://www.emacswiki.org/emacs/TabsAreEvil][Tabs are evil!]]
+#+begin_src emacs-lisp
+(setq-default indent-tabs-mode nil)
+#+end_src
 
 ** Auto-Save in =/tmp=
 
