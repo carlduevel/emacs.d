@@ -217,6 +217,13 @@ When editing org-files with source-blocks, we want the source blocks to be theme
     org-edit-src-content-indentation 0)
 #+END_SRC
 
+*** Key bindings 
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-c a") 'org-agenda)
+(global-set-key "\C-cl" 'org-store-link)
+#+END_SRC
+
 *** GTD
 #+BEGIN_SRC emacs-lisp
 (require 'org)
@@ -237,8 +244,6 @@ When editing org-files with source-blocks, we want the source blocks to be theme
               (sequence "PROJECT" "AGENDA" "|" "MINUTES")
               (sequence "WAITING" "|" "PROGRESS")))
 
-(global-set-key (kbd "C-c a") 'org-agenda)
-(global-set-key "\C-cl" 'org-store-link)
 
 (setq org-refile-targets '((org-agenda-files :maxlevel . 3)))
 (setq org-refile-use-outline-path 'file)
