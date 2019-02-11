@@ -429,7 +429,7 @@ The default keybinding of ~synosaurus~ clashes with org-mode.
 (require 'org-gcal)
 (setq org-gcal-client-id "670360079766-1u8vf6j1r5qmkg98f2imeje3mogql24f.apps.googleusercontent.com"
       org-gcal-client-secret (get-authinfo "gcal.api" "9999")
-      org-gcal-file-alist '(("c.a.duevel@gmail.com" .  "~/org/gtd/gcal.org")))
+      org-gcal-file-alist '(("c.a.duevel@gmail.com" .  "~/Dropbox/org/gtd/gcal.org")))
 (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
 (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
 #+END_SRC
