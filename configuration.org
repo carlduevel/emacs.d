@@ -17,12 +17,14 @@
 ** Packages to be installed
 
 #+BEGIN_SRC emacs-lisp
-(defvar my-packages '(ag
+(defvar my-packages '(atomic-chrome
+                      ag
                       auctex
+                      dockerfile-mode
+                      docker-compose-mode
                       evil
                       evil-escape
                       evil-leader
-                      atomic-chrome
                       exec-path-from-shell
                       org-bullets
                       org-gcal
