@@ -263,17 +263,29 @@ When editing org-files with source-blocks, we want the source blocks to be theme
 (add-hook 'org-mode-hook 'org-indent-mode)
 
 #+END_SRC
-Org Capture Templates are explained [[http://orgmode.org/manual/Capture-templates.html][here]], Org Template expansion [[http://orgmode.org/manual/Template-expansion.html#Template-expansion][here.]]
+Org Capture Templates are explained [[http://orgmode.org/manual/Capture-templates.html][here]] and Org Template expansion
+[[http://orgmode.org/manual/Template-expansion.html#Template-expansion][here.]] There is also a  need to load org-protocol to get the
+[[https://github.com/sprig/org-capture-extension][org-capture-extension]] going.
+
 #+BEGIN_SRC emacs-lisp
 (setq org-default-notes-file  inbox-file)
 (define-key global-map "\C-cc" 'org-capture)
+
+(require 'org-protocol)
+
 
 (setq org-capture-templates '(("a" "Appointment" entry gcal-file
                                "* %?\n\n%^T\n\n:PROPERTIES:\n\n:END:\n\n")
                               ("t" "Todo [inbox]" entry
                                (file+headline  inbox-file "Tasks")"* TODO %i%?")
+                              ("p" "Protocol" entry
+                               (file+headline inbox-file "Inbox")
+                               "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
+                              ("L" "Protocol Link" entry
+                               (file+headline inbox-file "Inbox")
+                               "* %? [[%:link][%:description]] \nCaptured on: %U")
                               ("T" "Tickler" entry
-                                (file+headline tickler-file "Tickler")
+                               (file+headline tickler-file "Tickler")
                                "* %i%? \n %U")))
 
 #+END_SRC
