@@ -289,6 +289,17 @@ Org Capture Templates are explained [[http://orgmode.org/manual/Capture-template
                                "* %i%? \n %U")))
 
 #+END_SRC
+Shortcut to get some overview of the work for today.
+#+BEGIN_SRC emacs-lisp
+(defun gtd()
+    "Open main gtd file and start 'org-agenda' for today."
+    (interactive)
+    (find-file gtd-file)
+    (org-agenda-list)
+    (org-agenda-day-view)
+    (shrink-window-if-larger-than-buffer)
+    (other-window 1))
+#+END_SRC
 
 *** TODO Can I auto format embedded lisp code?
 
