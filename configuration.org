@@ -507,7 +507,7 @@ with your favorite editor.
   (setq atomic-chrome-buffer-open-style 'frame))
 #+END_SRC
 ** Custom-File
-Set a custom file but do not load it.
+Keep the configuration clean aka no customization.
 #+BEGIN_SRC emacs-lisp
-(setq custom-file "~/.emacs.d/custom-settings.el")
+(setq custom-file "/dev/null")
 #+END_SRC
