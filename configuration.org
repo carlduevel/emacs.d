@@ -2,38 +2,26 @@
 #+AUTHOR: Carl Düvel
 #+EMAIL: c.a.duevel@gmail.com 
 
-* Dependency management
-
+* Package management
 ** Define package repositories(archives)
 
 #+BEGIN_SRC emacs-lisp
 (require 'package)
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
                          ("melpa" . "https://melpa.org/packages/")))
-
+(when (not package-archive-contents)
+  (package-refresh-contents))
 #+END_SRC
-
-** Packages to be installed
+** use-package
+Install use-package if necessary.
 #+BEGIN_SRC emacs-lisp
-(defvar my-packages '(use-package))
-
-#+END_SRC 
-Emacs dependencies/libraries are managed via the internal [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Packages.html#Packages][package
-management system]]. To initially install packages, open
-=~/.emacs.d/init.el=, refresh your package list with =M-x
-package-refresh-contents= and install everything using =M-x
-eval-buffer=.
-
-#+BEGIN_SRC emacs-lisp
-(dolist (p my-packages)
-  (unless (package-installed-p p)
+(unless (package-installed-p 'use-package)
   (package-refresh-contents)
-  (message "Installing %s" p)
-  (package-install p))
-  (add-to-list 'package-selected-packages p))
-#+END_SRC
-
-* Configuration of built-in features
+  (package-install 'use-package))
+(eval-when-compile
+  (require 'use-package))
+#+END_SRC 
+* Performance
 ** Garbage Collection
    
 Allow 20MB of memory (instead of 0.76MB) before calling garbage
@@ -42,6 +30,44 @@ operations.
 
 #+BEGIN_SRC emacs-lisp
   (setq gc-cons-threshold 20000000)
+#+END_SRC
+* Editing
+
+** Evil mode
+Vim emulation for emacs.
+#+BEGIN_SRC emacs-lisp
+(use-package evil
+  :ensure t
+  :config
+  (evil-mode 1))
+#+END_SRC
+*** Escape mode
+Escape modes in evil with jk instead of Esc.
+#+BEGIN_SRC emacs-lisp
+(use-package evil-escape
+  :ensure t
+  :config
+  (setq-default evil-escape-key-sequence "jk")
+  (setq-default evil-escape-delay 0.2)
+  (evil-escape-mode))
+#+END_SRC
+
+*** Leader Mode Config
+#+BEGIN_SRC emacs-lisp
+(use-package evil-leader
+  :ensure t
+  :config
+  (global-evil-leader-mode)
+  (evil-leader/set-leader ",")
+  (evil-leader/set-key
+    "a" 'org-archive-subtree-default
+    "b" 'evil-buffer
+    "f" 'find-file
+    "i" 'org-clock-in
+    "k" 'kill-buffer
+    "o" 'org-clock-out
+    "q" 'evil-quit
+    "w" 'basic-save-buffer))
 #+END_SRC
 ** Spaces instead of tabs
 [[https://www.emacswiki.org/emacs/TabsAreEvil][Tabs are evil!]]
@@ -82,13 +108,12 @@ periods.
 #+BEGIN_SRC emacs-lisp
   (setq sentence-end-double-space nil)
 #+END_SRC
-
-** Confirm before closing Emacs
+** Automatic Line Breaks
 #+BEGIN_SRC emacs-lisp
-  (setq confirm-kill-emacs 'y-or-n-p)
+  (add-hook 'text-mode-hook 'auto-fill-mode)
 #+END_SRC
 
-** =dired-mode=
+* =dired-mode=
 
 Ability to use =a= to visit a new directory or file in =dired= instead
 of using =RET=. =RET= works just fine, but it will create a new buffer
@@ -102,6 +127,12 @@ Human readable units
 
 #+BEGIN_SRC emacs-lisp
   (setq-default dired-listing-switches "-alh")
+#+END_SRC
+* UI
+
+** Confirm before closing Emacs
+#+BEGIN_SRC emacs-lisp
+  (setq confirm-kill-emacs 'y-or-n-p)
 #+END_SRC
 
 ** Ask =y/n= instead of =yes/no=
@@ -121,11 +152,6 @@ buffer containing that file so they can't get out of sync.
 #+BEGIN_SRC emacs-lisp
   (setq inhibit-splash-screen t)
   (setq inhibit-startup-message t)
-#+END_SRC
-
-** Automatic Line Breaks
-#+BEGIN_SRC emacs-lisp
-  (add-hook 'text-mode-hook 'auto-fill-mode)
 #+END_SRC
 
 ** Disable scroll bar
@@ -150,12 +176,6 @@ buffer containing that file so they can't get out of sync.
   (setq-default save-place t)
 #+END_SRC
 
-** Custom-File
-
-#+BEGIN_SRC emacs-lisp
-(setq custom-file "~/.emacs.d/custom-settings.el")
-(load custom-file t)
-#+END_SRC
 ** Put pointer to help window immideatly
 #+BEGIN_SRC emacs-lisp
 (setq help-window-select t)
@@ -167,19 +187,38 @@ buffer containing that file so they can't get out of sync.
   (setq-default save-place t)
 #+END_SRC
 
-** Custom-File
+** Buffer handling
+Kill all buffers but the current one.
 #+BEGIN_SRC emacs-lisp
-(setq custom-file "~/.emacs.d/custom-settings.el")
-(load custom-file t)
+  (defun kill-other-buffers ()
+    "Kill all other buffers."
+    (interactive)
+    (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
 #+END_SRC
 
-** Org-mode
-*** Exports
+** Custom theme
+#+BEGIN_SRC emacs-lisp
+(use-package zenburn-theme
+  :ensure t
+  :config
+  (load-theme 'zenburn t))
+#+END_SRC
+
+** Which Key
+  =which-key= displays the key bindings following your currently entered incomplete command (a prefix) in a popup.
+#+BEGIN_SRC emacs-lisp
+(use-package which-key
+  :ensure t
+  :hook (org-mode-hook cider-mode-hook))
+#+END_SRC
+
+* Org-mode
+** Exports
 Exports to markdown are useful.
 #+BEGIN_SRC emacs-lisp
 (require 'ox-md)
 #+END_SRC
-*** Display preferences
+** Display preferences
 
 Show an outline of pretty bullets instead of a list of asterisks.
 #+BEGIN_SRC emacs-lisp
@@ -205,14 +244,14 @@ When editing org-files with source-blocks, we want the source blocks to be theme
     org-edit-src-content-indentation 0)
 #+END_SRC
 
-*** Key bindings 
+** Key bindings 
 
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key "\C-cl" 'org-store-link)
 #+END_SRC
 
-*** GTD
+** GTD
 #+BEGIN_SRC emacs-lisp
 (require 'org)
 (setq gtd-dir "~/Dropbox/org/gtd/")
@@ -284,7 +323,25 @@ Shortcut to get some overview of the work for today.
     (other-window 1))
 #+END_SRC
 
-** ido completion engine
+** org-gcal
+#+BEGIN_SRC emacs-lisp
+(require 'netrc)
+
+(defun get-authinfo (host port)
+  (let* ((netrc (netrc-parse (expand-file-name "~/.authinfo")))
+         (hostentry (netrc-machine netrc host port port)))
+    (when hostentry (netrc-get hostentry "password"))))
+
+(use-package org-gcal
+  :ensure t
+  :config
+  (setq org-gcal-client-id "670360079766-1u8vf6j1r5qmkg98f2imeje3mogql24f.apps.googleusercontent.com"
+        org-gcal-client-secret (get-authinfo "gcal.api" "9999")
+        org-gcal-file-alist '(("c.a.duevel@gmail.com" .  "~/Dropbox/org/gtd/gcal.org"))))
+(add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
+(add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
+#+END_SRC
+* ido completion engine
 =ido= stands for /interactivly DO things/ so it means autocompletion
 for many functions like find-file or switch-buffer.
 #+BEGIN_SRC emacs-lisp
@@ -293,14 +350,14 @@ for many functions like find-file or switch-buffer.
   (setq ido-enable-flex-matching t)
 #+END_SRC
 
-** Better writing
-*** Spotting bad style in english texts
+* Writing prose
+** Spotting bad style in english texts
 [[https://github.com/bnbeckwith/writegood-mode][writegood-mode]] is a minor mode that finds common style problems.
 #+begin_src emacs-lisp
 (use-package writegood-mode 
   :ensure t)
 #+end_src
-*** Flyspell
+** Flyspell
 Order corrections by likeliness, not by the default of alphabetical
 ordering.
 #+BEGIN_SRC emacs-lisp
@@ -338,78 +395,45 @@ Skip source code in org mode documents.
 (add-to-list 'ispell-skip-region-alist '("^#+BEGIN_SRC" . "^#+END_SRC"))
 #+END_SRC
 
-** Programming
-*** Highlight matching parenthesis
+** LaTeX
+Auctex manual recommends these settings:
 #+BEGIN_SRC emacs-lisp
-  (show-paren-mode t)
+(use-package tex
+  :defer t
+  :ensure auctex
+  :config
+  (setq TeX-auto-save t)
+  (setq TeX-parse-self t))
 #+END_SRC
-** Buffer handling
-Kill all buffers but the current one.
+** Thesaurus
+A thesaurus is provided by the ~synosaurus~ package.
+The default backend is wordnet, an offline English thesaurus.
+We also install the popup library to have the options presented this
+way.
 #+BEGIN_SRC emacs-lisp
-  (defun kill-other-buffers ()
-    "Kill all other buffers."
-    (interactive)
-    (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
+(use-package popup :ensure t)
+(use-package synosaurus
+  :ensure t
+  :config 
+  (setq synosaurus-choose-method 'popup))
+#+END_SRC
+The default keybinding of ~synosaurus~ clashes with org-mode.
+#+BEGIN_SRC emacs-lisp
+(evil-leader/set-key "t" 'synosaurus-choose-and-replace)
 #+END_SRC
 
-* Configuration of external packages
+* Programming
 ** Docker
 #+begin_src emacs-lisp
 (use-package dockerfile-mode :ensure t)
 (use-package docker-compose-mode :ensure t)
 #+end_src
-** Set $MANPATH, $PATH and exec-path from shell even when started from GUI helpers like =dmenu= or =Spotlight=
+*** Highlight matching parenthesis
 #+BEGIN_SRC emacs-lisp
-(use-package exec-path-from-shell
-  :ensure t
-  :config
-  (exec-path-from-shell-initialize))
-#+END_SRC
-** Evil mode
-Vim emulation for emacs.
-#+BEGIN_SRC emacs-lisp
-(use-package evil
-  :ensure t
-  :config
-  (evil-mode t))
-#+END_SRC
-*** Escape mode
-Escape modes in evil with jk instead of Esc.
-#+BEGIN_SRC emacs-lisp
-(use-package evil-escape
-  :ensure t
-  :config
-  (setq-default evil-escape-key-sequence "jk")
-  (setq-default evil-escape-delay 0.2)
-  (evil-escape-mode))
+  (show-paren-mode t)
 #+END_SRC
 
-*** Leader Mode Config
-#+BEGIN_SRC emacs-lisp
-(use-package evil-leader
-  :ensure t
-  :config
-  (global-evil-leader-mode)
-  (evil-leader/set-leader ",")
-  (evil-leader/set-key
-    "a" 'org-archive-subtree-default
-    "b" 'evil-buffer
-    "f" 'find-file
-    "i" 'org-clock-in
-    "k" 'kill-buffer
-    "o" 'org-clock-out
-    "q" 'evil-quit
-    "w" 'basic-save-buffer))
-#+END_SRC
-** Custom theme
-#+BEGIN_SRC emacs-lisp
-(use-package zenburn-theme
-  :ensure t
-  :config
-  (load-theme 'zenburn t))
-#+END_SRC
-
-** Magit
+** Git
 
 Magit is an interface to the version control system Git.
 
@@ -430,60 +454,17 @@ Create shortcut for =Magit=.
 (add-hook 'with-editor-mode-hook 'evil-normal-state)
 #+END_SRC
 
-** Which Key
-  =which-key= displays the key bindings following your currently entered incomplete command (a prefix) in a popup.
+** Syntax checking
+http://www.flycheck.org/
+
+Enable global on the fly syntax checking through =flycheck=.
+
 #+BEGIN_SRC emacs-lisp
-(use-package which-key
+(use-package flycheck
   :ensure t
-  :hook (org-mode-hook cider-mode-hook))
+  :init (global-flycheck-mode))
 #+END_SRC
 
-** Thesaurus
-A thesaurus is provided by the ~synosaurus~ package.
-The default backend is wordnet, an offline English thesaurus.
-We also install the popup library to have the options presented this
-way.
-#+BEGIN_SRC emacs-lisp
-(use-package popup :ensure t)
-(use-package synosaurus
-  :ensure t
-  :config 
-  (setq synosaurus-choose-method 'popup))
-#+END_SRC
-The default keybinding of ~synosaurus~ clashes with org-mode.
-#+BEGIN_SRC emacs-lisp
-(evil-leader/set-key "t" 'synosaurus-choose-and-replace)
-#+END_SRC
-
-** Browser support
-Atomic chrome supports the Firefox extension [[https://addons.mozilla.org/de/firefox/addon/ghosttext/][Ghost Text]] and the Chrome
-extension [[https://chrome.google.com/webstore/detail/atomic-chrome/][Atomic Chrome]] which let you edit textareas in your browser
-with your favorite editor.
-#+BEGIN_SRC emacs-lisp
-(use-package atomic-chrome
-  :ensure t
-  :config
-  (atomic-chrome-start-server)
-  (setq atomic-chrome-buffer-open-style 'frame))
-#+END_SRC
-** org-gcal
-#+BEGIN_SRC emacs-lisp
-(require 'netrc)
-
-(defun get-authinfo (host port)
-  (let* ((netrc (netrc-parse (expand-file-name "~/.authinfo")))
-         (hostentry (netrc-machine netrc host port port)))
-    (when hostentry (netrc-get hostentry "password"))))
-
-(use-package org-gcal
-  :ensure t
-  :config
-  (setq org-gcal-client-id "670360079766-1u8vf6j1r5qmkg98f2imeje3mogql24f.apps.googleusercontent.com"
-        org-gcal-client-secret (get-authinfo "gcal.api" "9999")
-        org-gcal-file-alist '(("c.a.duevel@gmail.com" .  "~/Dropbox/org/gtd/gcal.org"))))
-(add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
-(add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
-#+END_SRC
 ** projectile
 :LOGBOOK:
 CLOCK: [2019-02-19 Di 13:24]
@@ -506,26 +487,27 @@ Use ag to search quickly.
   :ensure t)
 #+end_src
 
-** LaTeX
-Auctex manual recommends these settings:
+** Set $MANPATH, $PATH and exec-path from shell even when started from GUI helpers like =dmenu= or =Spotlight=
 #+BEGIN_SRC emacs-lisp
-(use-package tex
-  :defer t
-  :ensure auctex
-  :config
-  (setq TeX-auto-save t)
-  (setq TeX-parse-self t))
-
-#+END_SRC
-** Syntax checking
-http://www.flycheck.org/
-
-Enable global on the fly syntax checking through =flycheck=.
-
-#+BEGIN_SRC emacs-lisp
-(use-package flycheck
+(use-package exec-path-from-shell
   :ensure t
-  :init (global-flycheck-mode))
+  :config
+  (exec-path-from-shell-initialize))
 #+END_SRC
-
-
+* Misc
+** Browser support
+Atomic chrome supports the Firefox extension [[https://addons.mozilla.org/de/firefox/addon/ghosttext/][Ghost Text]] and the Chrome
+extension [[https://chrome.google.com/webstore/detail/atomic-chrome/][Atomic Chrome]] which let you edit textareas in your browser
+with your favorite editor.
+#+BEGIN_SRC emacs-lisp
+(use-package atomic-chrome
+  :ensure t
+  :config
+  (atomic-chrome-start-server)
+  (setq atomic-chrome-buffer-open-style 'frame))
+#+END_SRC
+** Custom-File
+Set a custom file but do not load it.
+#+BEGIN_SRC emacs-lisp
+(setq custom-file "~/.emacs.d/custom-settings.el")
+#+END_SRC
