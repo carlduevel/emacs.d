@@ -12,3 +12,6 @@ questions.org
 org-gcal
 url
 *.elc
+# Org-mode
+.org-id-locations
+*_archive
