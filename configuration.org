@@ -296,7 +296,7 @@ Org Capture Templates are explained [[http://orgmode.org/manual/Capture-template
 (require 'org-protocol)
 
 
-(setq org-capture-templates '(("a" "Appointment" entry gcal-file
+(setq org-capture-templates '(("a" "Appointment" entry (file gcal-file)
                                "* %?\n\n%^T\n\n:PROPERTIES:\n\n:END:\n\n")
                               ("t" "Todo [inbox]" entry
                                (file+headline  inbox-file "Tasks")"* TODO %i%?")
