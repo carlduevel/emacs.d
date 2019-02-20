@@ -209,7 +209,8 @@ Kill all buffers but the current one.
 #+BEGIN_SRC emacs-lisp
 (use-package which-key
   :ensure t
-  :hook (org-mode-hook cider-mode-hook))
+  :config
+  (which-key-mode))
 #+END_SRC
 
 * Org-mode
