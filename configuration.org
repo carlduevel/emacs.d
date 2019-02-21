@@ -502,6 +502,13 @@ Use ag to search quickly.
   :ensure t
   :init (global-company-mode))
 #+END_SRC
+
+** dumb jump
+#+BEGIN_SRC emacs-lisp
+(use-package dumb-jump
+  :ensure t
+  :bind ("s-g" . dumb-jump-go))
+#+END_SRC
 * Misc
 ** Browser support
 Atomic chrome supports the Firefox extension [[https://addons.mozilla.org/de/firefox/addon/ghosttext/][Ghost Text]] and the Chrome
