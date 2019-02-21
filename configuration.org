@@ -6,6 +6,16 @@ If I have seen further it is by standing on the shoulders of Giants
 Isaac Newton
 #+END_QUOTE
 * Package management
+** Define package repositories(archives)
+
+#+BEGIN_SRC emacs-lisp
+(require 'package)
+(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
+                         ("melpa-stable" . "https://stable.melpa.org/packages/")))
+(when (not package-archive-contents)
+  (package-refresh-contents))
+#+END_SRC
+
 ** Bootstrap use-package
 If =use-package= is not installed, install it.
 By default all packages should be installed so we set =use-package-always-ensure=.
@@ -22,15 +32,6 @@ The =:ensure-system-package= keyword allows you to ensure system binaries exist 
 (use-package use-package-ensure-system-package)
 #+END_SRC 
 
-** Define package repositories(archives)
-
-#+BEGIN_SRC emacs-lisp
-(require 'package)
-(setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-                         ("melpa" . "https://melpa.org/packages/")))
-(when (not package-archive-contents)
-  (package-refresh-contents))
-#+END_SRC
 * Performance
 ** Garbage Collection
    
@@ -219,6 +220,13 @@ Kill all buffers but the current one.
 #+END_SRC
 
 * Org-mode
+Do not fetch another version than the one built in, as org-gcal does
+not work with current org mode version.
+
+#+BEGIN_SRC emacs-lisp
+(use-package org
+  :pin manual)
+#+END_SRC
 ** Exports
 Exports to markdown are useful.
 #+BEGIN_SRC emacs-lisp
