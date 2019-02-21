@@ -485,6 +485,7 @@ Use ag to search quickly.
 
 #+begin_src emacs-lisp
 (use-package ag
+  :ensure-system-package ag
   :ensure t)
 #+end_src
 
