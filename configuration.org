@@ -1,8 +1,27 @@
 #+TITLE: Emacs configuration
 #+AUTHOR: Carl Düvel
 #+EMAIL: c.a.duevel@gmail.com 
-
+#+BEGIN_QUOTE
+If I have seen further it is by standing on the shoulders of Giants
+Isaac Newton
+#+END_QUOTE
 * Package management
+** Bootstrap use-package
+If =use-package= is not installed, install it.
+By default all packages should be installed so we set =use-package-always-ensure=.
+#+BEGIN_SRC emacs-lisp
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+(eval-when-compile
+  (require 'use-package)
+  (setq use-package-always-ensure t))
+#+END_SRC 
+The =:ensure-system-package= keyword allows you to ensure system binaries exist alongside your package declarations.
+#+BEGIN_SRC emacs-lisp
+(use-package use-package-ensure-system-package)
+#+END_SRC 
+
 ** Define package repositories(archives)
 
 #+BEGIN_SRC emacs-lisp
@@ -12,15 +31,6 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 #+END_SRC
-** use-package
-Install use-package if necessary.
-#+BEGIN_SRC emacs-lisp
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-(eval-when-compile
-  (require 'use-package))
-#+END_SRC 
 * Performance
 ** Garbage Collection
    
@@ -37,7 +47,6 @@ operations.
 Vim emulation for emacs.
 #+BEGIN_SRC emacs-lisp
 (use-package evil
-  :ensure t
   :config
   (evil-mode 1))
 #+END_SRC
@@ -45,7 +54,6 @@ Vim emulation for emacs.
 Escape modes in evil with jk instead of Esc.
 #+BEGIN_SRC emacs-lisp
 (use-package evil-escape
-  :ensure t
   :config
   (setq-default evil-escape-key-sequence "jk")
   (setq-default evil-escape-delay 0.2)
@@ -55,7 +63,6 @@ Escape modes in evil with jk instead of Esc.
 *** Leader Mode Config
 #+BEGIN_SRC emacs-lisp
 (use-package evil-leader
-  :ensure t
   :config
   (global-evil-leader-mode)
   (evil-leader/set-leader ",")
@@ -199,7 +206,6 @@ Kill all buffers but the current one.
 ** Custom theme
 #+BEGIN_SRC emacs-lisp
 (use-package zenburn-theme
-  :ensure t
   :config
   (load-theme 'zenburn t))
 #+END_SRC
@@ -208,9 +214,8 @@ Kill all buffers but the current one.
   =which-key= displays the key bindings following your currently entered incomplete command (a prefix) in a popup.
 #+BEGIN_SRC emacs-lisp
 (use-package which-key
-  :ensure t
   :config
-  (which-key-mode))
+  (add-hook 'after-init-hook 'which-key-mode))
 #+END_SRC
 
 * Org-mode
@@ -224,7 +229,6 @@ Exports to markdown are useful.
 Show an outline of pretty bullets instead of a list of asterisks.
 #+BEGIN_SRC emacs-lisp
 (use-package org-bullets
-  :ensure t
   :config
   (add-hook 'org-mode-hook 'org-bullets-mode))
 #+END_SRC
@@ -334,7 +338,6 @@ Shortcut to get some overview of the work for today.
     (when hostentry (netrc-get hostentry "password"))))
 
 (use-package org-gcal
-  :ensure t
   :config
   (setq org-gcal-client-id "670360079766-1u8vf6j1r5qmkg98f2imeje3mogql24f.apps.googleusercontent.com"
         org-gcal-client-secret (get-authinfo "gcal.api" "9999")
@@ -355,8 +358,7 @@ for many functions like find-file or switch-buffer.
 ** Spotting bad style in english texts
 [[https://github.com/bnbeckwith/writegood-mode][writegood-mode]] is a minor mode that finds common style problems.
 #+begin_src emacs-lisp
-(use-package writegood-mode 
-  :ensure t)
+(use-package writegood-mode)
 #+end_src
 ** Flyspell
 Order corrections by likeliness, not by the default of alphabetical
@@ -412,9 +414,8 @@ The default backend is wordnet, an offline English thesaurus.
 We also install the popup library to have the options presented this
 way.
 #+BEGIN_SRC emacs-lisp
-(use-package popup :ensure t)
+(use-package popup)
 (use-package synosaurus
-  :ensure t
   :config 
   (setq synosaurus-choose-method 'popup))
 #+END_SRC
@@ -426,8 +427,8 @@ The default keybinding of ~synosaurus~ clashes with org-mode.
 * Programming
 ** Docker
 #+begin_src emacs-lisp
-(use-package dockerfile-mode :ensure t)
-(use-package docker-compose-mode :ensure t)
+(use-package dockerfile-mode)
+(use-package docker-compose-mode)
 #+end_src
 *** Highlight matching parenthesis
 #+BEGIN_SRC emacs-lisp
@@ -444,7 +445,6 @@ Create shortcut for =Magit=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package magit
-  :ensure t
   :config
   (global-set-key (kbd "C-x g") 'magit-status))
 #+END_SRC
@@ -462,7 +462,6 @@ Enable global on the fly syntax checking through =flycheck=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package flycheck
-  :ensure t
   :init (global-flycheck-mode))
 #+END_SRC
 
@@ -474,7 +473,6 @@ https://github.com/bbatsov/projectile
 Projectile is a project interaction library.
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
-:ensure t
   :bind-keymap
   ("s-p" . projectile-command-map)
 :config
@@ -485,14 +483,12 @@ Use ag to search quickly.
 
 #+begin_src emacs-lisp
 (use-package ag
-  :ensure-system-package ag
-  :ensure t)
+  :ensure-system-package ag)
 #+end_src
 
 ** Set $MANPATH, $PATH and exec-path from shell even when started from GUI helpers like =dmenu= or =Spotlight=
 #+BEGIN_SRC emacs-lisp
 (use-package exec-path-from-shell
-  :ensure t
   :config
   (exec-path-from-shell-initialize))
 #+END_SRC
@@ -500,14 +496,12 @@ Use ag to search quickly.
 ** Auto completion
 #+BEGIN_SRC emacs-lisp
 (use-package company
-  :ensure t
   :init (global-company-mode))
 #+END_SRC
 
 ** dumb jump
 #+BEGIN_SRC emacs-lisp
 (use-package dumb-jump
-  :ensure t
   :bind ("s-g" . dumb-jump-go))
 #+END_SRC
 * Misc
@@ -517,7 +511,6 @@ extension [[https://chrome.google.com/webstore/detail/atomic-chrome/][Atomic Chr
 with your favorite editor.
 #+BEGIN_SRC emacs-lisp
 (use-package atomic-chrome
-  :ensure t
   :config
   (atomic-chrome-start-server)
   (setq atomic-chrome-buffer-open-style 'frame))
