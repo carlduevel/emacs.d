@@ -525,7 +525,10 @@ with your favorite editor.
 #+BEGIN_SRC emacs-lisp
 (use-package atomic-chrome
   :config
-  (atomic-chrome-start-server)
+  ;; Handle if there is an Emacs instance running which has the server already
+  ;; started
+  (ignore-errors
+    (atomic-chrome-start-server))
   (setq atomic-chrome-buffer-open-style 'frame))
 #+END_SRC
 ** Custom-File
