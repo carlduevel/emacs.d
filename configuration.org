@@ -552,7 +552,6 @@ Bring a little color to all those parentheses.
 (use-package dumb-jump
   :bind ("s-g" . dumb-jump-go))
 #+END_SRC
-* Misc
 ** yasnippets
 In order to save some typing snippets come in handy.
 #+BEGIN_SRC emacs-lisp
@@ -566,6 +565,37 @@ yasnippet.
 #+BEGIN_SRC emacs-lisp :tangle yes
 (use-package yasnippet-snippets
   :after yasnippet)
+#+END_SRC
+** Clojure
+*** CIDER
+CIDER is the Clojure(Script) Interactive Development Environment that Rocks!
+
+CIDER extends Emacs with support for interactive programming in
+Clojure. The features are centered around cider-mode, an Emacs
+minor-mode that complements clojure-mode. While clojure-mode supports
+editing Clojure source files, cider-mode adds support for interacting
+with a running Clojure process for compilation, debugging, definition
+and documentation lookup, running tests and so on.
+#+BEGIN_SRC emacs-lisp
+(use-package cider
+:init 
+(setq cider-repl-pop-to-buffer-on-connect nil)
+)
+#+END_SRC 
+*** Dependencies
+CIDER needs nREPL so this needs to be put in =~/.lein/profiles.clj=:
+#+BEGIN_SRC clojure
+{:repl {:plugins [[cider/cider-nrepl "0.21.1"]]}}
+#+END_SRC
+To check if it is working run ==lein repl==.
+** Structural editing
+#+BEGIN_SRC emacs-lisp 
+(use-package paredit
+  :hook ((emacs-lisp-mode . paredit-mode)
+         (clojure-mode . paredit-mode)))
+#+END_SRC
+
+* misc
 ** Browser support
 Atomic chrome supports the Firefox extension [[https://addons.mozilla.org/de/firefox/addon/ghosttext/][Ghost Text]] and the Chrome
 extension [[https://chrome.google.com/webstore/detail/atomic-chrome/][Atomic Chrome]] which let you edit textareas in your browser
