@@ -40,7 +40,7 @@ collection. This means GC runs less often, which speeds up some
 operations.
 
 #+BEGIN_SRC emacs-lisp
-  (setq gc-cons-threshold 20000000)
+(setq gc-cons-threshold 20000000)
 #+END_SRC
 * Editing
 
@@ -100,10 +100,10 @@ defaults to /tmp on Unix), instead of in the same directory as the
 file.
 
 #+BEGIN_SRC emacs-lisp
-  (setq backup-directory-alist
-        `((".*" . ,temporary-file-directory)))
-  (setq auto-save-file-name-transforms
-        `((".*" ,temporary-file-directory t)))
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))
+(setq auto-save-file-name-transforms
+      `((".*" ,temporary-file-directory t)))
 #+END_SRC
 
 ** Save Buffer on focus out
@@ -113,10 +113,10 @@ Pulled from [[https://emacsredux.com/blog/2014/03/22/a-peek-at-emacs-24-dot-4-fo
 (add-hook 'focus-out-hook (lambda () (save-some-buffers t)))
 #+END_SRC
 ** Always follow symlinks
-   When opening a file, always follow symlinks.
+When opening a file, always follow symlinks.
 
 #+BEGIN_SRC emacs-lisp
-  (setq vc-follow-symlinks t)
+(setq vc-follow-symlinks t)
 #+END_SRC
 
 ** Sentences have one space after a period
@@ -124,11 +124,11 @@ Don't assume that sentences should have two spaces after
 periods.
 
 #+BEGIN_SRC emacs-lisp
-  (setq sentence-end-double-space nil)
+(setq sentence-end-double-space nil)
 #+END_SRC
 ** Automatic Line Breaks
 #+BEGIN_SRC emacs-lisp
-  (add-hook 'text-mode-hook 'auto-fill-mode)
+(add-hook 'text-mode-hook 'auto-fill-mode)
 #+END_SRC
 
 * =dired-mode=
@@ -138,25 +138,25 @@ of using =RET=. =RET= works just fine, but it will create a new buffer
 for /every/ interaction whereas =a= reuses the current buffer.
 
 #+BEGIN_SRC emacs-lisp
-  (put 'dired-find-alternate-file 'disabled nil)
+(put 'dired-find-alternate-file 'disabled nil)
 #+END_SRC
 
 Human readable units
 
 #+BEGIN_SRC emacs-lisp
-  (setq-default dired-listing-switches "-alh")
+(setq-default dired-listing-switches "-alh")
 #+END_SRC
 * UI
 
 ** Confirm before closing Emacs
 #+BEGIN_SRC emacs-lisp
-  (setq confirm-kill-emacs 'y-or-n-p)
+(setq confirm-kill-emacs 'y-or-n-p)
 #+END_SRC
 
 ** Ask =y/n= instead of =yes/no=
-   This is a favorable shorthand.
+This is a favorable shorthand.
 #+BEGIN_SRC emacs-lisp
-  (fset 'yes-or-no-p 'y-or-n-p)
+(fset 'yes-or-no-p 'y-or-n-p)
 #+END_SRC
 ** Auto revert files on change
 When something changes a file, automatically refresh the
@@ -168,8 +168,8 @@ buffer containing that file so they can't get out of sync.
 ** Disable startup message
 
 #+BEGIN_SRC emacs-lisp
-  (setq inhibit-splash-screen t)
-  (setq inhibit-startup-message t)
+(setq inhibit-splash-screen t)
+(setq inhibit-startup-message t)
 #+END_SRC
 
 ** Disable scroll bar
@@ -190,8 +190,8 @@ buffer containing that file so they can't get out of sync.
 ** Remember the cursor position of files when reopening them
 
 #+BEGIN_SRC emacs-lisp
-  (setq save-place-file "~/.emacs.d/saveplace")
-  (setq-default save-place t)
+(setq save-place-file "~/.emacs.d/saveplace")
+(setq-default save-place t)
 #+END_SRC
 
 ** Put pointer to help window immideatly
@@ -201,17 +201,17 @@ buffer containing that file so they can't get out of sync.
 ** Remember the cursor position of files when reopening them
 
 #+BEGIN_SRC emacs-lisp
-  (setq save-place-file "~/.emacs.d/saveplace")
-  (setq-default save-place t)
+(setq save-place-file "~/.emacs.d/saveplace")
+(setq-default save-place t)
 #+END_SRC
 
 ** Buffer handling
 Kill all buffers but the current one.
 #+BEGIN_SRC emacs-lisp
-  (defun kill-other-buffers ()
-    "Kill all other buffers."
-    (interactive)
-    (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
+(defun kill-other-buffers ()
+  "Kill all other buffers."
+  (interactive)
+  (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
 #+END_SRC
 
 ** Custom theme
@@ -222,7 +222,7 @@ Kill all buffers but the current one.
 #+END_SRC
 
 ** Which Key
-  =which-key= displays the key bindings following your currently entered incomplete command (a prefix) in a popup.
+=which-key= displays the key bindings following your currently entered incomplete command (a prefix) in a popup.
 #+BEGIN_SRC emacs-lisp
 (use-package which-key
   :config
@@ -260,16 +260,16 @@ Show a little downward-pointing arrow instead of the usual ellipsis
 (=...=) that org displays when there's stuff under a header.
 
 #+BEGIN_SRC emacs-lisp
-  (setq org-ellipsis "⤵")
+(setq org-ellipsis "⤵")
 #+END_SRC
 
 When editing org-files with source-blocks, we want the source blocks to be themed as they would in their native mode.
 
 #+BEGIN_SRC emacs-lisp
 (setq org-src-fontify-natively t
-    org-src-tab-acts-natively t
-    org-confirm-babel-evaluate nil
-    org-edit-src-content-indentation 0)
+      org-src-tab-acts-natively t
+      org-confirm-babel-evaluate nil
+      org-edit-src-content-indentation 0)
 #+END_SRC
 
 ** Key bindings 
@@ -288,27 +288,27 @@ When editing org-files with source-blocks, we want the source blocks to be theme
 (setq tickler-file (concat gtd-dir "tickler.org"))
 (setq gcal-file (concat gtd-dir "gcal.org"))
 (setq org-agenda-files (list
-                         inbox-file
-                         gtd-file
-                         gcal-file
-                         tickler-file))
+                        inbox-file
+                        gtd-file
+                        gcal-file
+                        tickler-file))
 
 
 (setq org-todo-keywords
-            '((sequence "TODO" "|" "DONE")
-              (sequence "PROJECT" "AGENDA" "|" "MINUTES")
-              (sequence "WAITING" "|" "PROGRESS")))
+      '((sequence "TODO" "|" "DONE")
+        (sequence "PROJECT" "AGENDA" "|" "MINUTES")
+        (sequence "WAITING" "|" "PROGRESS")))
 
 
 (setq org-refile-targets '((org-agenda-files :maxlevel . 3)))
 (setq org-refile-use-outline-path 'file)
 
 (setq org-agenda-custom-commands 
-         '(("h" "@home" tags-todo "@home")
-         ("c" "@computer" tags-todo "@computer")
-         ("H" "+hasi" tags-todo "+hasi")
-         ("p" "@phone" tags-todo "@phone")
-         ("b" "@BO" tags-todo "@BO")))                           
+      '(("h" "@home" tags-todo "@home")
+        ("c" "@computer" tags-todo "@computer")
+        ("H" "+hasi" tags-todo "+hasi")
+        ("p" "@phone" tags-todo "@phone")
+        ("b" "@BO" tags-todo "@BO")))                           
 
 (add-hook 'org-mode-hook 'org-indent-mode)
 
@@ -342,13 +342,13 @@ Org Capture Templates are explained [[http://orgmode.org/manual/Capture-template
 Shortcut to get some overview of the work for today.
 #+BEGIN_SRC emacs-lisp
 (defun gtd()
-    "Open main gtd file and start 'org-agenda' for today."
-    (interactive)
-    (find-file gtd-file)
-    (org-agenda-list)
-    (org-agenda-day-view)
-    (shrink-window-if-larger-than-buffer)
-    (other-window 1))
+  "Open main gtd file and start 'org-agenda' for today."
+  (interactive)
+  (find-file gtd-file)
+  (org-agenda-list)
+  (org-agenda-day-view)
+  (shrink-window-if-larger-than-buffer)
+  (other-window 1))
 #+END_SRC
 
 ** org-gcal
@@ -369,13 +369,13 @@ Shortcut to get some overview of the work for today.
 (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
 #+END_SRC
 * Auto-completion
-** ido 
+** ido completion engine
 =ido= stands for /interactivly DO things/ so it means autocompletion
 for many functions like find-file or switch-buffer.
 #+BEGIN_SRC emacs-lisp
-  (ido-mode t)
-  (ido-everywhere t)
-  (setq ido-enable-flex-matching t)
+(ido-mode t)
+(ido-everywhere t)
+(setq ido-enable-flex-matching t)
 #+END_SRC
 ** smex
 =smex= does auto completion for the ~M-x~ shortcut to find a function.
@@ -408,19 +408,19 @@ Switch between German and English dictionaries.
 Those were installed with ~apt install ingerman iamerican-large~
 
 #+BEGIN_SRC emacs-lisp
-  (defun flyspell-switch-dictionary()
-    "Switch between German and English dictionaries"
-    (interactive)
-    (let* ((dic ispell-current-dictionary)
-           (change (if (string= dic "deutsch") "english" "deutsch")))
-      (ispell-change-dictionary change)
-      (message "Dictionary switched from %s to %s" dic change)))
+(defun flyspell-switch-dictionary()
+  "Switch between German and English dictionaries"
+  (interactive)
+  (let* ((dic ispell-current-dictionary)
+         (change (if (string= dic "deutsch") "english" "deutsch")))
+    (ispell-change-dictionary change)
+    (message "Dictionary switched from %s to %s" dic change)))
 #+END_SRC
 
 Switch on flyspell automatically in some major modes.
 #+BEGIN_SRC emacs-lisp
-  (add-hook 'text-mode-hook 'flyspell-mode)
-  (add-hook 'org-mode-hook 'flyspell-mode)
+(add-hook 'text-mode-hook 'flyspell-mode)
+(add-hook 'org-mode-hook 'flyspell-mode)
 #+END_SRC
 
 Skip source code in org mode documents.
@@ -473,7 +473,7 @@ The default keybinding of ~synosaurus~ clashes with org-mode.
 #+end_src
 *** Highlight matching parenthesis
 #+BEGIN_SRC emacs-lisp
-  (show-paren-mode t)
+(show-paren-mode t)
 #+END_SRC
 
 ** Git
@@ -516,7 +516,7 @@ Projectile is a project interaction library.
 (use-package projectile
   :bind-keymap
   ("s-p" . projectile-command-map)
-:config
+  :config
   (projectile-mode +1))
 #+END_SRC
 
