@@ -436,6 +436,16 @@ The default keybinding of ~synosaurus~ clashes with org-mode.
 #+BEGIN_SRC emacs-lisp
 (evil-leader/set-key "t" 'synosaurus-choose-and-replace)
 #+END_SRC
+** Markdown
+#+BEGIN_SRC emacs-lisp 
+(use-package markdown-mode
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
+#+END_SRC
 
 * Programming
 ** Docker
