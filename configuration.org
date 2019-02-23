@@ -51,6 +51,16 @@ Vim emulation for emacs.
   :config
   (evil-mode 1))
 #+END_SRC
+*** Unbind M-. and M- in =evil-mode=
+=M-.= and =M-,= are popular keybindings for "jump to definition" and
+"back". =evil-mode= by default binds those to rather rarely used
+functions =evil-repeat-pop-next= and =xref-pop-marker-stack=, for some reason.
+#+BEGIN_SRC emacs-lisp
+(use-package evil
+  :config
+  (define-key evil-normal-state-map (kbd "M-.") nil)
+  (define-key evil-normal-state-map (kbd "M-,") nil))
+#+END_SRC
 *** Escape mode
 Escape modes in evil with jk instead of Esc.
 #+BEGIN_SRC emacs-lisp
