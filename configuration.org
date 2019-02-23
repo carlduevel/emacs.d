@@ -532,6 +532,13 @@ Use ag to search quickly.
   :init (global-company-mode))
 #+END_SRC
 
+** Rainbow delimiters
+Bring a little color to all those parentheses.
+#+BEGIN_SRC emacs-lisp
+(use-package rainbow-delimiters
+  :hook (prog-mode . rainbow-delimiters-mode))
+#+END_SRC 
+
 ** dumb jump
 #+BEGIN_SRC emacs-lisp
 (use-package dumb-jump
