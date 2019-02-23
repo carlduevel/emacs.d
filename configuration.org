@@ -553,6 +553,19 @@ Bring a little color to all those parentheses.
   :bind ("s-g" . dumb-jump-go))
 #+END_SRC
 * Misc
+** yasnippets
+In order to save some typing snippets come in handy.
+#+BEGIN_SRC emacs-lisp
+(use-package yasnippet
+  :init
+  (yas-global-mode 1)
+  (setq yas-prompt-functions '(yas-ido-prompt)))
+#+END_SRC
+Yasnippet snippet is the official collection of snippets for
+yasnippet.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package yasnippet-snippets
+  :after yasnippet)
 ** Browser support
 Atomic chrome supports the Firefox extension [[https://addons.mozilla.org/de/firefox/addon/ghosttext/][Ghost Text]] and the Chrome
 extension [[https://chrome.google.com/webstore/detail/atomic-chrome/][Atomic Chrome]] which let you edit textareas in your browser
