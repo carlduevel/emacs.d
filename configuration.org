@@ -368,13 +368,21 @@ Shortcut to get some overview of the work for today.
 (add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
 (add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
 #+END_SRC
-* ido completion engine
+* Auto-completion
+** ido 
 =ido= stands for /interactivly DO things/ so it means autocompletion
 for many functions like find-file or switch-buffer.
 #+BEGIN_SRC emacs-lisp
   (ido-mode t)
   (ido-everywhere t)
   (setq ido-enable-flex-matching t)
+#+END_SRC
+** smex
+=smex= does auto completion for the ~M-x~ shortcut to find a function.
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package smex
+  :init (smex-initialize)
+  :bind ("M-x" . smex))
 #+END_SRC
 
 * Writing prose
