@@ -379,7 +379,7 @@ for many functions like find-file or switch-buffer.
 #+END_SRC
 ** smex
 =smex= does auto completion for the ~M-x~ shortcut to find a function.
-#+BEGIN_SRC emacs-lisp :tangle yes
+#+BEGIN_SRC emacs-lisp
 (use-package smex
   :init (smex-initialize)
   :bind ("M-x" . smex))
@@ -562,7 +562,7 @@ In order to save some typing snippets come in handy.
 #+END_SRC
 Yasnippet snippet is the official collection of snippets for
 yasnippet.
-#+BEGIN_SRC emacs-lisp :tangle yes
+#+BEGIN_SRC emacs-lisp
 (use-package yasnippet-snippets
   :after yasnippet)
 #+END_SRC
