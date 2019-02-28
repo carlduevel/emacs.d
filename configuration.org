@@ -4,7 +4,8 @@
 [[https://api.travis-ci.org/hackbert/emacs.d][file:https://api.travis-ci.org/hackbert/emacs.d.svg]]
 #+BEGIN_QUOTE
 If I have seen further it is by standing on the shoulders of Giants
-Isaac Newton
+
+-- Isaac Newton
 #+END_QUOTE
 * Package management
 ** Define package repositories(archives)
