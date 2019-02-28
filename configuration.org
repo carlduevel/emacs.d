@@ -1,7 +1,7 @@
 #+TITLE: Emacs configuration
 #+AUTHOR: Carl Düvel
 #+EMAIL: c.a.duevel@gmail.com 
-[[https://api.travis-ci.org/hackbert/emacs.d][file:https://api.travis-ci.org/hackbert/emacs.d.svg]]
+[[https://travis-ci.org/hackbert/emacs.d][file:https://api.travis-ci.org/hackbert/emacs.d.svg]]
 #+BEGIN_QUOTE
 If I have seen further it is by standing on the shoulders of Giants
 
