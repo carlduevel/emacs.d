@@ -29,10 +29,17 @@ By default all packages should be installed so we set =use-package-always-ensure
   (require 'use-package)
   (setq use-package-always-ensure t))
 #+END_SRC 
+*** Additions to use-package
 The =:ensure-system-package= keyword allows you to ensure system binaries exist alongside your package declarations.
 #+BEGIN_SRC emacs-lisp
 (use-package use-package-ensure-system-package)
 #+END_SRC 
+
+The =:diminish= keyword allows you to remove minor modes from the mode line. 
+#+BEGIN_SRC emacs-lisp
+(use-package diminish)
+#+END_SRC 
+
 
 * Performance
 ** Garbage Collection
@@ -50,6 +57,7 @@ operations.
 Vim emulation for emacs.
 #+BEGIN_SRC emacs-lisp
 (use-package evil
+  :diminish undo-tree-mode
   :config
   (evil-mode 1))
 #+END_SRC
@@ -67,6 +75,7 @@ functions =evil-repeat-pop-next= and =xref-pop-marker-stack=, for some reason.
 Escape modes in evil with jk instead of Esc.
 #+BEGIN_SRC emacs-lisp
 (use-package evil-escape
+  :diminish evil-escape-mode
   :config
   (setq-default evil-escape-key-sequence "jk")
   (setq-default evil-escape-delay 0.2)
@@ -76,10 +85,12 @@ Escape modes in evil with jk instead of Esc.
 *** Leader Mode Config
 #+BEGIN_SRC emacs-lisp
 (use-package evil-leader
+  :diminish global-evil-leader-mode
   :config
   (global-evil-leader-mode)
   (evil-leader/set-leader ",")
   (evil-leader/set-key
+
     "a" 'org-archive-subtree-default
     "b" 'evil-buffer
     "f" 'find-file
@@ -131,6 +142,7 @@ periods.
 ** Automatic Line Breaks
 #+BEGIN_SRC emacs-lisp
 (add-hook 'text-mode-hook 'auto-fill-mode)
+(diminish 'auto-fill-function)
 #+END_SRC
 
 * =dired-mode=
@@ -227,6 +239,7 @@ Kill all buffers but the current one.
 =which-key= displays the key bindings following your currently entered incomplete command (a prefix) in a popup.
 #+BEGIN_SRC emacs-lisp
 (use-package which-key
+  :diminish which-key-mode
   :config
   (add-hook 'after-init-hook 'which-key-mode))
 #+END_SRC
@@ -313,7 +326,7 @@ When editing org-files with source-blocks, we want the source blocks to be theme
         ("b" "@BO" tags-todo "@BO")))                           
 
 (add-hook 'org-mode-hook 'org-indent-mode)
-
+(diminish 'org-indent-mode)
 #+END_SRC
 Org Capture Templates are explained [[http://orgmode.org/manual/Capture-templates.html][here]] and Org Template expansion
 [[http://orgmode.org/manual/Template-expansion.html#Template-expansion][here.]] There is also a  need to load org-protocol to get the
@@ -394,21 +407,22 @@ for many functions like find-file or switch-buffer.
 (use-package writegood-mode)
 #+end_src
 ** Flyspell
+Do not show flyspell in the mode line.
+#+BEGIN_SRC emacs-lisp 
+(diminish 'flyspell-mode)
+#+END_SRC
 Order corrections by likeliness, not by the default of alphabetical
 ordering.
 #+BEGIN_SRC emacs-lisp
 (setq flyspell-sort-corrections nil)
 #+END_SRC
-
 Do not print messages for every word (when checking the entire
 buffer). This is a major performance gain.
 #+BEGIN_SRC emacs-lisp
 (setq flyspell-issue-message-flag nil)
 #+END_SRC
-
 Switch between German and English dictionaries.
 Those were installed with ~apt install ingerman iamerican-large~
-
 #+BEGIN_SRC emacs-lisp
 (defun flyspell-switch-dictionary()
   "Switch between German and English dictionaries"
@@ -418,15 +432,12 @@ Those were installed with ~apt install ingerman iamerican-large~
     (ispell-change-dictionary change)
     (message "Dictionary switched from %s to %s" dic change)))
 #+END_SRC
-
 Switch on flyspell automatically in some major modes.
 #+BEGIN_SRC emacs-lisp
 (add-hook 'text-mode-hook 'flyspell-mode)
 (add-hook 'org-mode-hook 'flyspell-mode)
 #+END_SRC
-
 Skip source code in org mode documents.
-
 #+BEGIN_SRC emacs-lisp
 (add-to-list 'ispell-skip-region-alist '("^#+BEGIN_SRC" . "^#+END_SRC"))
 #+END_SRC
@@ -505,6 +516,7 @@ Enable global on the fly syntax checking through =flycheck=.
 
 #+BEGIN_SRC emacs-lisp
 (use-package flycheck
+  :diminish flycheck-mode
   :init (global-flycheck-mode))
 #+END_SRC
 
@@ -516,6 +528,7 @@ https://github.com/bbatsov/projectile
 Projectile is a project interaction library.
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
+  :diminish projectile-mode
   :bind-keymap
   ("s-p" . projectile-command-map)
   :config
@@ -539,6 +552,7 @@ Use ag to search quickly.
 ** Auto completion
 #+BEGIN_SRC emacs-lisp
 (use-package company
+  :diminish company-mode
   :init (global-company-mode))
 #+END_SRC
 
@@ -546,6 +560,7 @@ Use ag to search quickly.
 Bring a little color to all those parentheses.
 #+BEGIN_SRC emacs-lisp
 (use-package rainbow-delimiters
+  :diminish rainbow-delimiters-mode
   :hook (prog-mode . rainbow-delimiters-mode))
 #+END_SRC 
 
@@ -558,6 +573,7 @@ Bring a little color to all those parentheses.
 In order to save some typing snippets come in handy.
 #+BEGIN_SRC emacs-lisp
 (use-package yasnippet
+  :diminish yas-minor-mode
   :init
   (yas-global-mode 1)
   (setq yas-prompt-functions '(yas-ido-prompt)))
