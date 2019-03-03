@@ -144,7 +144,18 @@ periods.
 (add-hook 'text-mode-hook 'auto-fill-mode)
 (diminish 'auto-fill-function)
 #+END_SRC
-
+** Multiple cursors
+Get multiple cursors with evil friendly keybindings!
+All the shortcuts can be found [[https://github.com/gabesoft/evil-mc/blob/master/evil-mc.el][here.]]
+The most important are:
+- ~C-n~/~C-p~ for creating cursors
+- ~M-n~/~M-p~ for cycling trough cursors
+- ~C-t~/~grn~ does skip a cursor forward
+- ~grp~ does the same backwards
+#+BEGIN_SRC emacs-lisp 
+(use-package evil-mc
+  :config (global-evil-mc-mode 1))
+#+END_SRC
 * =dired-mode=
 
 Ability to use =a= to visit a new directory or file in =dired= instead
