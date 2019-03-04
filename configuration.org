@@ -264,6 +264,19 @@ Kill all buffers but the current one.
 (use-package powerline
   :config (powerline-center-evil-theme))
 #+END_SRC 
+** Icons
+This package provides nice icons which can be used by neotree or dired.
+#+BEGIN_SRC emacs-lisp
+(require 'all-the-icons)
+#+END_SRC
+After installation run [[help:all-the-icons-install-fonts][this function]] to install the fonts.
+*** Dired
+Add file icons to dired mode:
+#+BEGIN_SRC emacs-lisp :tangle yes
+(use-package all-the-icons-dired
+         :pin melpa
+	 :hook (dired-mode . all-the-icons-dired-mode))
+#+END_SRC
 * Org-mode
 Do not fetch another version than the one built in, as org-gcal does
 not work with current org mode version.
@@ -308,7 +321,7 @@ When editing org-files with source-blocks, we want the source blocks to be theme
 (global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key "\C-cl" 'org-store-link)
 #+END_SRC
-
+ 
 ** GTD
 #+BEGIN_SRC emacs-lisp
 (require 'org)
