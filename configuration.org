@@ -271,7 +271,7 @@ This package provides nice icons which can be used by neotree or dired.
 After installation run [[help:all-the-icons-install-fonts][this function]] to install the fonts.
 *** Dired
 Add file icons to dired mode:
-#+BEGIN_SRC emacs-lisp :tangle yes
+#+BEGIN_SRC emacs-lisp 
 (use-package all-the-icons-dired
          :pin melpa
 	 :hook (dired-mode . all-the-icons-dired-mode))
