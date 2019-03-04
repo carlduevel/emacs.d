@@ -13,7 +13,8 @@ If I have seen further it is by standing on the shoulders of Giants
 #+BEGIN_SRC emacs-lisp
 (require 'package)
 (setq package-archives '(("gnu" . "https://elpa.gnu.org/packages/")
-                         ("melpa-stable" . "https://stable.melpa.org/packages/")))
+                         ("melpa-stable" . "https://stable.melpa.org/packages/")
+                         ("melpa" . "https://melpa.org/packages/")))
 (when (not package-archive-contents)
   (package-refresh-contents))
 #+END_SRC
@@ -27,7 +28,8 @@ By default all packages should be installed so we set =use-package-always-ensure
   (package-install 'use-package))
 (eval-when-compile
   (require 'use-package)
-  (setq use-package-always-ensure t))
+  (setq use-package-always-ensure t)
+  (setq use-package-always-pin melpa-stable))
 #+END_SRC 
 *** Additions to use-package
 The =:ensure-system-package= keyword allows you to ensure system binaries exist alongside your package declarations.
