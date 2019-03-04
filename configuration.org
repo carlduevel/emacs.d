@@ -150,10 +150,12 @@ periods.
 Get multiple cursors with evil friendly keybindings!
 All the shortcuts can be found [[https://github.com/gabesoft/evil-mc/blob/master/evil-mc.el][here.]]
 The most important are:
-- ~C-n~/~C-p~ for creating cursors
-- ~M-n~/~M-p~ for cycling trough cursors
-- ~C-t~/~grn~ does skip a cursor forward
-- ~grp~ does the same backwards
++ ~C-n~/~C-p~ for creating cursors
++ ~M-n~/~M-p~ for cycling trough cursors
++ ~C-t~/~grn~ does skip a cursor forward
++ ~grp~ does the same backwards
++ ~grm~ to make all cursors
++ ~gru~ to get out of the multi cursor mode
 #+BEGIN_SRC emacs-lisp 
 (use-package evil-mc
   :config (global-evil-mc-mode 1))
