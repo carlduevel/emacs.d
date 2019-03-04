@@ -42,7 +42,6 @@ The =:diminish= keyword allows you to remove minor modes from the mode line.
 (use-package diminish)
 #+END_SRC 
 
-
 * Performance
 ** Garbage Collection
    
@@ -654,6 +653,28 @@ As of version 2.0.0 clj-refactor also needs a plugin in =~/.lein/profiles.clj=:
          (clojure-mode . paredit-mode)))
 #+END_SRC
 
+** Neotree
+#+BEGIN_SRC emacs-lisp 
+(use-package neotree
+  :after (all-the-icons)
+  :config
+  (setq projectile-switch-project-action 'neotree-projectile-action)
+  (setq neo-autorefresh nil)
+  (setq neo-smart-open t)
+  (setq neo-theme 'icons)
+  (add-hook 'neotree-mode-hook
+            (lambda ()
+              (evil-define-key 'normal neotree-mode-map (kbd "TAB") 'neotree-enter)
+              (evil-define-key 'normal neotree-mode-map (kbd "SPC") 'neotree-quick-look)
+              (evil-define-key 'normal neotree-mode-map (kbd "q") 'neotree-hide)
+              (evil-define-key 'normal neotree-mode-map (kbd "RET") 'neotree-enter)
+              (evil-define-key 'normal neotree-mode-map (kbd "g") 'neotree-refresh)
+              (evil-define-key 'normal neotree-mode-map (kbd "n") 'neotree-next-line)
+              (evil-define-key 'normal neotree-mode-map (kbd "p") 'neotree-previous-line)
+              (evil-define-key 'normal neotree-mode-map (kbd "A") 'neotree-stretch-toggle)
+              (evil-define-key 'normal neotree-mode-map (kbd "H") 'neotree-hidden-file-toggle)))
+  :bind (("<f2>" . neotree-toggle)))
+#+END_SRC
 * misc
 ** Browser support
 Atomic chrome supports the Firefox extension [[https://addons.mozilla.org/de/firefox/addon/ghosttext/][Ghost Text]] and the Chrome
