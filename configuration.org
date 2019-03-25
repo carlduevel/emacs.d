@@ -277,9 +277,7 @@ Add file icons to dired mode:
 	 :hook (dired-mode . all-the-icons-dired-mode))
 #+END_SRC
 * Org-mode
-Do not fetch another version than the one built in, as org-gcal does
-not work with current org mode version.
-
+Do not fetch another version than the one built in.
 #+BEGIN_SRC emacs-lisp
 (use-package org
   :pin manual)
@@ -290,7 +288,6 @@ Exports to markdown are useful.
 (require 'ox-md)
 #+END_SRC
 ** Display preferences
-
 Show an outline of pretty bullets instead of a list of asterisks.
 #+BEGIN_SRC emacs-lisp
 (use-package org-bullets
@@ -313,12 +310,12 @@ When editing org-files with source-blocks, we want the source blocks to be theme
       org-confirm-babel-evaluate nil
       org-edit-src-content-indentation 0)
 #+END_SRC
-
 ** Key bindings 
 
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "C-c a") 'org-agenda)
-(global-set-key "\C-cl" 'org-store-link)
+(global-set-key (kbd "C-c l") 'org-store-link)
+(global-set-key (kbd "C-c p") 'org-priority-up)
 #+END_SRC
  
 ** GTD
@@ -328,11 +325,9 @@ When editing org-files with source-blocks, we want the source blocks to be theme
 (setq inbox-file (concat gtd-dir "inbox.org"))
 (setq gtd-file (concat gtd-dir "gtd.org"))
 (setq tickler-file (concat gtd-dir "tickler.org"))
-(setq gcal-file (concat gtd-dir "gcal.org"))
 (setq org-agenda-files (list
                         inbox-file
                         gtd-file
-                        gcal-file
                         tickler-file))
 
 
@@ -366,9 +361,7 @@ Org Capture Templates are explained [[http://orgmode.org/manual/Capture-template
 (require 'org-protocol)
 
 
-(setq org-capture-templates '(("a" "Appointment" entry (file gcal-file)
-                               "* %?\n\n%^T\n\n:PROPERTIES:\n\n:END:\n\n")
-                              ("t" "Todo [inbox]" entry
+(setq org-capture-templates '(("t" "Todo [inbox]" entry
                                (file+headline  inbox-file "Tasks")"* TODO %i%?")
                               ("p" "Protocol" entry
                                (file+headline inbox-file "Inbox")
@@ -393,23 +386,6 @@ Shortcut to get some overview of the work for today.
   (other-window 1))
 #+END_SRC
 
-** org-gcal
-#+BEGIN_SRC emacs-lisp
-(require 'netrc)
-
-(defun get-authinfo (host port)
-  (let* ((netrc (netrc-parse (expand-file-name "~/.authinfo")))
-         (hostentry (netrc-machine netrc host port port)))
-    (when hostentry (netrc-get hostentry "password"))))
-
-(use-package org-gcal
-  :config
-  (setq org-gcal-client-id "670360079766-1u8vf6j1r5qmkg98f2imeje3mogql24f.apps.googleusercontent.com"
-        org-gcal-client-secret (get-authinfo "gcal.api" "9999")
-        org-gcal-file-alist '(("c.a.duevel@gmail.com" .  "~/Dropbox/org/gtd/gcal.org"))))
-(add-hook 'org-agenda-mode-hook (lambda () (org-gcal-sync) ))
-(add-hook 'org-capture-after-finalize-hook (lambda () (org-gcal-sync) ))
-#+END_SRC
 * Auto-completion
 ** ido completion engine
 =ido= stands for /interactivly DO things/ so it means autocompletion
@@ -548,9 +524,6 @@ Enable global on the fly syntax checking through =flycheck=.
 #+END_SRC
 
 ** projectile
-:LOGBOOK:
-CLOCK: [2019-02-19 Di 13:24]
-:END:
 https://github.com/bbatsov/projectile
 Projectile is a project interaction library.
 #+BEGIN_SRC emacs-lisp
