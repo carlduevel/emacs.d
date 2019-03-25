@@ -445,6 +445,10 @@ Skip source code in org mode documents.
 #+BEGIN_SRC emacs-lisp
 (add-to-list 'ispell-skip-region-alist '("^#+BEGIN_SRC" . "^#+END_SRC"))
 #+END_SRC
+Make it easy to correct a word
+#+BEGIN_SRC emacs-lisp
+(evil-leader/set-key "c" 'flyspell-correct-word-before-point)
+#+END_SRC
 
 ** LaTeX
 Auctex manual recommends these settings:
