@@ -349,6 +349,7 @@ When editing org-files with source-blocks, we want the source blocks to be theme
 
 (add-hook 'org-mode-hook 'org-indent-mode)
 (diminish 'org-indent-mode)
+(add-to-list 'org-modules 'org-habit t)
 #+END_SRC
 Org Capture Templates are explained [[http://orgmode.org/manual/Capture-templates.html][here]] and Org Template expansion
 [[http://orgmode.org/manual/Template-expansion.html#Template-expansion][here.]] There is also a  need to load org-protocol to get the
@@ -363,6 +364,8 @@ Org Capture Templates are explained [[http://orgmode.org/manual/Capture-template
 
 (setq org-capture-templates '(("t" "Todo [inbox]" entry
                                (file+headline  inbox-file "Tasks")"* TODO %i%?")
+                              ("i" "Idea" entry
+                               (file  "~/Dropbox/org/ideas.org")"* %i%?")
                               ("p" "Protocol" entry
                                (file+headline inbox-file "Inbox")
                                "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
@@ -373,7 +376,6 @@ Org Capture Templates are explained [[http://orgmode.org/manual/Capture-template
                                (file+headline tickler-file "Tickler")
                                "* %i%? \n %U")))
 
-(add-to-list 'org-modules 'org-habit t)
 #+END_SRC
 Shortcut to get some overview of the work for today.
 #+BEGIN_SRC emacs-lisp
