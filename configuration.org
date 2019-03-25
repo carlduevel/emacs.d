@@ -373,6 +373,7 @@ Org Capture Templates are explained [[http://orgmode.org/manual/Capture-template
                                (file+headline tickler-file "Tickler")
                                "* %i%? \n %U")))
 
+(add-to-list 'org-modules 'org-habit t)
 #+END_SRC
 Shortcut to get some overview of the work for today.
 #+BEGIN_SRC emacs-lisp
