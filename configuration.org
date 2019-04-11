@@ -329,6 +329,10 @@ When editing org-files with source-blocks, we want the source blocks to be theme
                         inbox-file
                         gtd-file
                         tickler-file))
+(setq org-agenda-skip-scheduled-if-done t) 
+(setq org-agenda-skip-deadline-prewarning-if-scheduled t)
+(setq org-agenda-skip-deadline-if-done t)
+ 
 
 
 (setq org-todo-keywords
